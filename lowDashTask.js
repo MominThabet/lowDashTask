@@ -69,13 +69,14 @@ function arrayJoin(array,separator=','){
 // console.log(arrayJoin([1,2, 'b', 'c']))
 function identity(a) {return a};
 function property(){
-    
+    //this should have same process as in _.property to handle strings
+
 }
 function matchesProperty(){
-
+   //this should have same process as in _.matchesProperty to handle arrays;
 }
 function matches(){
-
+    //this should have same process as in _.matches(source) to handle objs
 }
 function predicateType(predicate){
     if (typeof predicate == "string"){
@@ -313,7 +314,6 @@ function arrayZip(...arrays){
         }
         out.push(temp);
     }
-
     return out;
 }
 
@@ -351,7 +351,6 @@ function objectAssign(object,...sources){
         }
     }
     return object
-
 }
 
 // function Foo() {
@@ -391,7 +390,6 @@ function arrayUnzip(array){
         }
         out.push(temp);
     }
-
     return out;
 }
 
@@ -414,10 +412,8 @@ function collectionCountBy(collection,iteratee=identity){
     if(Array.isArray(collection)){
         arr=collection;
     }else{
-        arr =Object.values(collection);
-        
+        arr =Object.values(collection);       
     }
-
         for(let i of arr){
             if(out[iteratee(i)]){
                 out[iteratee(i)]+= 1;
@@ -425,7 +421,6 @@ function collectionCountBy(collection,iteratee=identity){
                 out[iteratee(i)]=1
             }
         }
-    
     return out;
 }
 
@@ -513,8 +508,6 @@ function objectOmit(object,...paths){
             out[key]=object[key];
         }
     }
-    
-
     return out;
 }
 // var object = { 'a': 1, 'b': '2', 'c': 3 };
@@ -601,6 +594,7 @@ function collectionFilter(collection, predicate=identity){
 
 function collectionKeyBy(collection,iteratee=identity){
     
+
 
 }
 
