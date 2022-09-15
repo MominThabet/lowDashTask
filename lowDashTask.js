@@ -36,8 +36,8 @@ function arrayPull(array ,...values){
     return array;
 }
 // var array = ['a', 'b', 'c', 'a', 'b', 'c'];
-// console.log(arrayPull(array,'a','c'))
-// console.log(array)
+// //console.log(arrayPull(array,'a','c'))
+// //console.log(array)
 function arrayChunk(array,size=1){
     let arr=[];
     for(let i =0;i<array.length;){
@@ -54,7 +54,7 @@ function arrayChunk(array,size=1){
     return arr;
 }
 
-// console.log(arrayChunk(['a', 'b', 'c', 'd']))
+// //console.log(arrayChunk(['a', 'b', 'c', 'd']))
 
 function arrayJoin(array,separator=','){
     let str ='';
@@ -66,7 +66,7 @@ function arrayJoin(array,separator=','){
     }
     return str;
 }
-// console.log(arrayJoin([1,2, 'b', 'c']))
+// //console.log(arrayJoin([1,2, 'b', 'c']))
 function identity(a) {return a};
 function property(){
     //this should have same process as in _.property to handle strings
@@ -108,13 +108,13 @@ function collectionEvery(collection,predicate=identity){
     
 }
 // let o=[]
-console.log(collectionEvery([true, 1, 7, 'yes'], Boolean))
+// //console.log(collectionEvery([true, 1, 7, 'yes'], Boolean))
 var users = {
     1:{ 'user': 'barney', 'age': 36, 'active': false },
     2:{ 'user': 'fred',   'age': 50, 'active': false }
   };
 
-console.log(collectionEvery(users, (u)=>u.age<40))
+// //console.log(collectionEvery(users, (u)=>u.age<40))
 
 function collectionIncludes(collection,value,fromIndex=0){
     if(typeof collection =='string'){
@@ -156,12 +156,12 @@ function collectionIncludes(collection,value,fromIndex=0){
 // }return false;
 
 
-// console.log(collectionIncludes([1, 2, 3], 1))
+// //console.log(collectionIncludes([1, 2, 3], 1))
 // // // => true
  
-// console.log(collectionIncludes([1, 2, 3], 1));
-// console.log(collectionIncludes({ 'a': 1, 'b': 2  ,'c':1}, 3))
-console.log(collectionIncludes('Momin thabet','ha'))
+// //console.log(collectionIncludes([1, 2, 3], 1));
+// //console.log(collectionIncludes({ 'a': 1, 'b': 2  ,'c':1}, 3))
+// //console.log(collectionIncludes('Momin thabet','ha'))
 
 function collectionSize(collection){
     if(typeof collection =='string'){
@@ -172,9 +172,9 @@ function collectionSize(collection){
         return Object.keys(collection).length;
     }
 }
-// console.log(collectionSize([1,2,3]));
-// console.log(collectionSize({ 'a': 1, 'b': 2 }))
-// console.log(collectionSize('pebbles'))
+// //console.log(collectionSize([1,2,3]));
+// //console.log(collectionSize({ 'a': 1, 'b': 2 }))
+// //console.log(collectionSize('pebbles'))
 function arrayTake(array,n=1){
     let arr=[];
     for(let i=0;i<n && i<array.length;i++){
@@ -182,13 +182,13 @@ function arrayTake(array,n=1){
     }
     return arr;
 }
-// console.log(arrayTake([1, 2, 3]))
+// //console.log(arrayTake([1, 2, 3]))
 
-// console.log(arrayTake([1, 2, 3],2))
+// //console.log(arrayTake([1, 2, 3],2))
 
-// console.log(arrayTake([1, 2, 3],5))
+// //console.log(arrayTake([1, 2, 3],5))
 
-// console.log(arrayTake([1, 2, 3],0))
+// //console.log(arrayTake([1, 2, 3],0))
 
 function collectionSample(collection){
     if(Array.isArray(collection)){
@@ -200,7 +200,7 @@ function collectionSample(collection){
         return vals[rand]
     }
 }
-// console.log(collectionSample({a:1,b:2}))
+// //console.log(collectionSample({a:1,b:2}))
 function collectionSome(collection,predicate=identity){
     if(Array.isArray(collection)){
         if(collection.length ==0) return false;
@@ -215,9 +215,9 @@ function collectionSome(collection,predicate=identity){
         } return false;
     }
 }
-// console.log(collectionSome([false, 1, null, 'yes'], Boolean))
+// //console.log(collectionSome([false, 1, null, 'yes'], Boolean))
 
-// console.log()
+// //console.log()
 
 function arrayIntersection(...arrays){
     let out=[];
@@ -228,7 +228,7 @@ function arrayIntersection(...arrays){
     }
     return out;
 }
-// console.log(arrayIntersection([1,2,3,4],[1,2,3],[1]))
+// //console.log(arrayIntersection([1,2,3,4],[1,2,3],[1]))
 
 function arrayUnion(...arrays){
     let out =[];
@@ -245,7 +245,7 @@ function arrayUnion(...arrays){
 }
 
 
-// console.log(arrayUnion([2], [1, 2]))
+// //console.log(arrayUnion([2], [1, 2]))
 
 
 function arrayCompact(array){
@@ -259,7 +259,7 @@ function arrayCompact(array){
     return out;
 }
 
-// console.log(arrayCompact([0, 1, false, 2, '', 3]))
+// //console.log(arrayCompact([0, 1, false, 2, '', 3]))
 
 function arrayDifference(array,values){
     let diff=[];
@@ -270,7 +270,7 @@ function arrayDifference(array,values){
     }
     return diff;
 }
-// console.log(arrayDifference([2,1],[2,3]))
+// //console.log(arrayDifference([2,1],[2,3]))
 function arrayDrop(array,n=1){
     let out = [];
     let i=0;
@@ -284,10 +284,10 @@ function arrayDrop(array,n=1){
     return out;
 }
 
-// console.log(arrayDrop([1,2,3]));
-// console.log(arrayDrop([1,2,3],2));
-// console.log(arrayDrop([1,2,3],5));
-// console.log(arrayDrop([1,2,3],0));
+// //console.log(arrayDrop([1,2,3]));
+// //console.log(arrayDrop([1,2,3],2));
+// //console.log(arrayDrop([1,2,3],5));
+// //console.log(arrayDrop([1,2,3],0));
 function arrayFlatten(array){
     let out=[];
     for(let e of array){
@@ -300,7 +300,7 @@ function arrayFlatten(array){
     return out;
 }
 
-// console.log(arrayFlatten([1, [2, [3, [4]], 5]]))
+// //console.log(arrayFlatten([1, [2, [3, [4]], 5]]))
 function arrayZip(...arrays){
     let out=[];
     let max=0;
@@ -317,7 +317,7 @@ function arrayZip(...arrays){
     return out;
 }
 
-// console.log(arrayZip(['a'],[1,2,3],[true,false]))
+// //console.log(arrayZip(['a'],[1,2,3],[true,false]))
 
 function collectionFind(collection,predicate=identity,fromIndex=0){
     if(Array.isArray(collection)){
@@ -341,7 +341,7 @@ function collectionFind(collection,predicate=identity,fromIndex=0){
 //     {'user':'pebbles','age':1,'active':true}
 // ];
 
-// console.log(collectionFind(users,function(o){return o.age==1 &&o.active==true;}))
+// //console.log(collectionFind(users,function(o){return o.age==1 &&o.active==true;}))
 
 
 function objectAssign(object,...sources){
@@ -364,7 +364,7 @@ function objectAssign(object,...sources){
 // Foo.prototype.b = 2;
 // Bar.prototype.d = 4;
 
-// console.log(objectAssign({'a':0},new Foo,new Bar))
+// //console.log(objectAssign({'a':0},new Foo,new Bar))
 
 
 function arrayUniq(array){
@@ -375,7 +375,7 @@ function arrayUniq(array){
     return out;
 }
 
-// console.log(arrayUniq([2,1,2]))
+// //console.log(arrayUniq([2,1,2]))
 
 function arrayUnzip(array){
     let out=[];
@@ -394,8 +394,8 @@ function arrayUnzip(array){
 }
 
 // let zipped = arrayZip(['a','b'],[1,2,3],[true,false]);
-// console.log(zipped)
-// console.log(arrayUnzip(zipped))
+// //console.log(zipped)
+// //console.log(arrayUnzip(zipped))
 
 function arrayZipObject(props,values){
     let out ={};
@@ -404,7 +404,7 @@ function arrayZipObject(props,values){
     }
     return out;
 }
-// console.log(arrayZipObject(['a','b','c'],[1,3]));
+// //console.log(arrayZipObject(['a','b','c'],[1,3]));
 
 function collectionCountBy(collection,iteratee=identity){
     let out ={};
@@ -424,10 +424,10 @@ function collectionCountBy(collection,iteratee=identity){
     return out;
 }
 
-// console.log(collectionCountBy([6.1, 4.2, 6.3], Math.floor))
+// //console.log(collectionCountBy([6.1, 4.2, 6.3], Math.floor))
 
-// console.log(collectionCountBy(['one', 'two', 'three'], (e)=>e.length))
-// console.log(collectionCountBy({a:1,b:2,c:3,d:2,f:3,l:3}))
+// //console.log(collectionCountBy(['one', 'two', 'three'], (e)=>e.length))
+// //console.log(collectionCountBy({a:1,b:2,c:3,d:2,f:3,l:3}))
 
 
 function arrayPullAt(array,...indexes){
@@ -450,14 +450,14 @@ function arrayPullAt(array,...indexes){
 }
 
 // var array=['a','b','c','d'];
-// // console.log(arrayPullAt(array,[1,3]))
-// // console.log(array)
+// // //console.log(arrayPullAt(array,[1,3]))
+// // //console.log(array)
 // var pulled=arrayPullAt(array,1,3,4);
 
-// console.log(array);
+// //console.log(array);
 // // //=>['a','c']
 
-// console.log(pulled);
+// //console.log(pulled);
 function collectionMap(collection,iteratee=identity){
     let out=[];
     if(Array.isArray(collection)){
@@ -475,13 +475,13 @@ function collectionMap(collection,iteratee=identity){
 // function square(n) {
 //     return n * n;
 // }
-// console.log(collectionMap([4,8],square))
-// console.log(collectionMap({a:4,b:8},square))
+// //console.log(collectionMap([4,8],square))
+// //console.log(collectionMap({a:4,b:8},square))
 // var users = [
 //     { 'user': 'barney' },
 //     { 'user': 'fred' }
 // ];
-// console.log(collectionMap(users,(u)=>u['user']));
+// //console.log(collectionMap(users,(u)=>u['user']));
 
 function objectFindKey(object,predicate=identity){
     let keys =Object.keys(object)
@@ -495,10 +495,10 @@ var users = {
     'fred':    { 'age': 40, 'active': false },
     'pebbles': { 'age': 1,  'active': true }
 };
-// console.log(objectFindKey(users,(o)=>o.age<40));
-// console.log(objectFindKey(users,(o)=>o.age==1&&o.active==true));
-// console.log(objectFindKey(users,(o)=>o.active==false))
-// console.log(objectFindKey(users,(o)=>o.active))
+// //console.log(objectFindKey(users,(o)=>o.age<40));
+// //console.log(objectFindKey(users,(o)=>o.age==1&&o.active==true));
+// //console.log(objectFindKey(users,(o)=>o.active==false))
+// //console.log(objectFindKey(users,(o)=>o.active))
 function objectOmit(object,...paths){
     let out ={};
     let keys =Object.keys(object);
@@ -511,7 +511,7 @@ function objectOmit(object,...paths){
     return out;
 }
 // var object = { 'a': 1, 'b': '2', 'c': 3 };
-// console.log(objectOmit(object,['a'],'c'))
+// //console.log(objectOmit(object,['a'],'c'))
 
 function arrayFindLastIndex(array,predicate=_.identity,fromIndex=array.length-1){
     if(array.length ==0) return -1;
@@ -526,8 +526,8 @@ function arrayFindLastIndex(array,predicate=_.identity,fromIndex=array.length-1)
 //       { 'user': 'fred',    'active': false },
 //       { 'user': 'pebbles', 'active': true }
 // ];
-// console.log(arrayFindLastIndex(users,function(o) { return o.user == 'pebbles'; }))
-// console.log(arrayFindLastIndex(users,(o)=>o.active==false));
+// //console.log(arrayFindLastIndex(users,function(o) { return o.user == 'pebbles'; }))
+// //console.log(arrayFindLastIndex(users,(o)=>o.active==false));
 function objectHas(object,path){
     if(typeof path=='string'){
         return objectHas(object,splitter(path));
@@ -543,7 +543,7 @@ function objectHas(object,path){
 }
 // var object = { 'a': { 'b': 7 } };
 // // var other = objectCreate({ 'a': _.create({ 'b': 2 }) });
-// console.log(objectHas(object,'a.b'))
+// //console.log(objectHas(object,'a.b'))
 
 
 function splitter(str,spliter='.'){
@@ -587,17 +587,156 @@ function collectionFilter(collection, predicate=identity){
 
 // ];
 
-// // console.log(collectionFilter(users,function(o) { return !o.active; }))
-// // console.log(collectionFilter(users, (o)=>o.age== 36&& o.active==true ))
+// // //console.log(collectionFilter(users,function(o) { return !o.active; }))
+// // //console.log(collectionFilter(users, (o)=>o.age== 36&& o.active==true ))
 
 
 
 function collectionKeyBy(collection,iteratee=identity){
-    
+    let out ={};
+    for(let i in collection){
+        out[iteratee(collection[i])]=collection[i];
+    }    
+    return out;
+}
 
+// var array = [
+//       { 'dir': 'left', 'code': 97 },
+//       { 'dir': 'right', 'code': 100 }
+// ];
+
+// let obj ={
+//     a:7,b:8,c:9,
+// }
+// //console.log(collectionKeyBy(array,function(o) {
+//       return String.fromCharCode(o.code);
+//     }));
+// //console.log(collectionKeyBy(array,o=>o.dir))
+// //console.log(collectionKeyBy(obj,o=>o))
+
+function arrayDropRightWhile(array,predicate=identity){
+    let out=[];
+    predicate=predicateType(predicate);
+    for(let e of array){
+        if(!predicate(e)){
+            out.push(e)
+        }
+    }
+    return out;
+}
+
+
+// var users = [
+//      { 'user': 'barney', 'active': true },
+//      { 'user': 'fred',  'active': false },
+//      { 'user': 'pebbles', 'active': false }
+// ];
+
+// //console.log(arrayDropRightWhile(users, function(o) { return !o.active; }));
+
+function arrayRemove(array,predicate=identity){
+    let out=[];
+    for(let e of array){
+        if(predicate(e)){
+            out.push(e);
+        }
+    }
+    arrayPull(array,...out);
+    return out;
+}
+// var array = [1, 2, 3, 4];
+// var evens = arrayRemove(array, function(n) {
+//   return n % 2 == 0;
+// });
+ 
+// //console.log(array);
+// // => [1, 3]
+ 
+// //console.log(evens);
+function objectAssignIn(object,...sources){
+    for(let source of sources){
+        for(let key in (source)){
+            object[key] = source[key]
+        }
+    }
+    return object    
+}
+
+// function Foo() {
+//     this.a = 1;
+// }
+   
+// function Bar() {
+//     this.c = 3;
+// }
+   
+// Foo.prototype.b = 2;
+// Bar.prototype.d = 4;
+
+// //console.log(objectAssignIn({ 'a': 0 }, new Foo, new Bar));
+
+function objectSet(object,path,value){
+
+}
+// var object = { 'a': [{ 'b': { 'c': 3 } }] };
+ 
+// objectSet(object, 'a[0].b.c', 4);
+// //console.log(object.a[0].b.c);
+// // => 4
+ 
+// objectSet(object, ['x', '0', 'y', 'z'], 5);
+// //console.log(object.x[0].y.z);
+
+function collectionInvokeMap(){
+
+}
+function collectionOrderBy(){
+
+}
+function collectionPartition(){
+
+}
+function arrayFindIndex(array,predicate=identity,fromIndex=0){
+    predicate =predicateType(predicate);
+    if(array.length ==0) return -1;
+        let i = fromIndex;
+        for(i;i<array.length;i++){
+            if(predicate(array[i])) return i;
+        }return -1;
 
 }
 
+
+// var users = [
+//     { 'user': 'barney',  'active': false },
+//     { 'user': 'fred',    'active': false },
+//     { 'user': 'pebbles', 'active': true }
+// ];
+// console.log(arrayFindIndex(users, function(o) { return o.user == 'barney'; }))
+function objectInvert(object){
+    let out={};
+    for(let prop in object){
+        out[object[prop]]=prop;
+    }
+    return out;
+}
+
+console.log(objectInvert({a:1,b:2,c:[1,2]}))
+function objectUpdate(){
+    
+}
+function objectTransform(){
+
+}
+
+function arrayFromPairs(pairs){
+    let out={};
+    for(let pair of pairs){
+        out[pair[0]]=pair[1];
+    }
+    return out;
+}
+// console.log(arrayFromPairs([['a', 1], ['b', 2]]))
 
 function arrayFlattenDeep(array){
     let out =[];
@@ -613,4 +752,91 @@ function arrayFlattenDeep(array){
     return out;
 }
 
-// console.log(arrayFlattenDeep([1, [2, [3, [4]],5,[6],[[7]]]]))
+// //console.log(arrayFlattenDeep([1, [2, [3, [4]],5,[6],[[7]]]]))
+
+
+function objectMerge(object, ...sources){
+
+
+}
+
+function collectionSortedBy(){
+
+}
+
+function after(n,func){
+    
+    return ()=>{
+        n-=1;
+        if (n<0){
+            return func();
+        }
+    }
+}
+
+// const done = after(3,()=>console.log('done mf'));
+// done()
+// done()
+// done()
+// done()
+//console.log(done())
+
+
+const delay = function(func,wait,...args){
+    return setTimeout(
+        ()=>{
+            for(let e of args)
+                func(e);
+            },wait
+    )
+}
+
+// //console.log(delay((t)=>//console.log(t),1000,'later'));
+
+
+function reversed(array){
+    for(let i =0,j=array.length-1;i<Math.floor(array.length/2) ;i++,j--){
+        [array[i],array[j]]=[array[j],array[i]];
+    }
+    return array;
+}
+
+function flip(func){
+    return (...x)=>{
+        // //console.log(reversed(x));
+        return func(reversed(x))}
+}
+// let flipped =flip((e)=>e.map(i=>i*i));
+// //console.log(flipped(1,2,3,4))
+
+
+function unary(func){
+    return (...arg)=>{
+        return func(arg[0])
+    }
+}
+
+// console.log(collectionMap(['6','8'],unary(parseInt)))
+function collectionReduce(collection,iteratee=identity,accumulator){
+    if(Array.isArray(collection)){
+        if(accumulator!==undefined) {
+            for(let e of collection){
+                accumulator = iteratee(accumulator,e)
+            }
+        }else{
+            accumulator=collection[0];
+            for(let i =1;i<collection.length;i++){
+                accumulator =iteratee(accumulator,collection[i])
+            }
+        }
+        return accumulator ;
+    }else{
+        
+    }
+}
+// console.log(collectionReduce(['a','b'],(sum,n)=>sum+n))
+
+// console.log(collectionReduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
+//       (result[value] || (result[value] = [])).push(key);
+//       return result;
+//     }, {}));
