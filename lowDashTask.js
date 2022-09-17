@@ -70,7 +70,6 @@ function arrayJoin(array,separator=','){
 function identity(a) {return a};
 function property(){
     //this should have same process as in _.property to handle strings
-
 }
 function matchesProperty(){
    //this should have same process as in _.matchesProperty to handle arrays;
@@ -88,7 +87,6 @@ function predicateType(predicate){
     }else {
         return predicate;
     }
-
 }
 function collectionEvery(collection,predicate=identity){
     
@@ -105,7 +103,7 @@ function collectionEvery(collection,predicate=identity){
             if(!predicate(collection[key])) return false;
         } return true;
     }
-    
+     
 }
 // let o=[]
 // //console.log(collectionEvery([true, 1, 7, 'yes'], Boolean))
@@ -825,7 +823,6 @@ var other = {
    
 // console.log(objectMerge(object,other))
 function collectionSortBy(collection,iteratee=identity){
-    
     iteratee= Array.isArray(iteratee)?iteratee: [iteratee];
     let out =[];
     collection = Array.isArray(collection)?collection:Object.values(collection);
@@ -840,16 +837,18 @@ function collectionSortBy(collection,iteratee=identity){
                 sth=false;
                 break;
             }
-        }
-       
-        
+        } 
         if(sth){
             out.splice(j,0,collection[i]);
         }
         sth =true;
-    }
-    
+    }   
     return out;
+}
+
+function sortbyV2(collection,iteratee=identity) {
+    let out =[];
+
 }
 var users = [
     { 'user': 'fred',   'age': 42 },
@@ -857,7 +856,7 @@ var users = [
     { 'user': 'fred',   'age': 40 },
     { 'user': 'barney', 'age': 50 }
 ];
-console.log(collectionSortBy(users, [function(o) { return o.user; }]))
+// console.log(collectionSortBy(users, [function(o) { return o.user; }]))
 // console.log(collectionSortBy(users, [function(o) { return o.user; },function(o) { return o.age; }]))
 
 function after(n,func){
