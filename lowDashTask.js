@@ -676,26 +676,51 @@ function objectAssignIn(object,...sources){
 // //console.log(objectAssignIn({ 'a': 0 }, new Foo, new Bar));
 
 function objectSet(object,path,value){
-
+    path = (typeof path ==='string')? collectionFilter(path.split(/[.\[\]]/),(x)=>x!=''):path;
+    let len =path.length-1;
+    let obj =object;
+    for(var i =0;i<len;i++){
+        if((/\d/.test(path[i+1]))){
+            obj[path[i]]= obj[path[i]] ||[];
+        }else{
+        
+            obj[path[i]]= obj[path[i]] ||{};
+        } 
+        obj =obj[path[i]];
+    }
+    obj[path[i]]=value;
+    return object;
 }
 // var object = { 'a': [{ 'b': { 'c': 3 } }] };
  
-// objectSet(object, 'a[0].b.c', 4);
-// //console.log(object.a[0].b.c);
-// // => 4
+// console.log(objectSet(object, 'a[0].b.c', 4));
+// console.log(object.a);
+// // // => 4
  
 // objectSet(object, ['x', '0', 'y', 'z'], 5);
-// //console.log(object.x[0].y.z);
+// console.log(object.x);
 
-function collectionInvokeMap(){
+function collectionInvokeMap(collection,path,...args){
+    
 
 }
 function collectionOrderBy(){
 
 }
-function collectionPartition(){
-
+function collectionPartition(collection,predicate=identity){
+    predicate = predicateType(predicate);
+    let out =[[],[]];
+    for(let i in collection){
+        if(predicate(collection[i])){
+            out[0].push(collection[i]);
+        }else {
+            out[1].push(collection[i]);
+        }
+    }
+    return out;
 }
+// console.log(collectionPartition(users, function(o) { return o.active; }))
+
 function arrayFindIndex(array,predicate=identity,fromIndex=0){
     predicate =predicateType(predicate);
     if(array.length ==0) return -1;
@@ -721,10 +746,32 @@ function objectInvert(object){
     return out;
 }
 
-console.log(objectInvert({a:1,b:2,c:[1,2]}))
-function objectUpdate(){
-    
+// console.log(objectInvert({a:1,b:2,c:[1,2]}))
+function objectUpdate(object,path,updater){
+    // return objectSet(object,path,)
+    path = (typeof path ==='string')? collectionFilter(path.split(/[.\[\]]/),(x)=>x!=''):path;
+    let len =path.length-1;
+    let obj =object;
+    for(var i =0;i<len;i++){
+        if((/\d/.test(path[i+1]))){
+            obj[path[i]]= obj[path[i]] ||[];
+        }else{
+        
+            obj[path[i]]= obj[path[i]] ||{};
+        } 
+        obj =obj[path[i]];
+    }
+    obj[path[i]]=updater(obj[path[i]]);
+    return object;
 }
+
+// var object = { 'a': [{ 'b': { 'c': 3 } }] };
+// objectUpdate(object, 'a[0].b.c', function(n) { return n * n; })
+// console.log(object.a[0].b.c)
+// objectUpdate(object, 'x[0].y.z', function(n) { return n ? n + 1 : 0; })
+// console.log(object.x)
+
+
 function objectTransform(){
 
 }
@@ -756,16 +803,64 @@ function arrayFlattenDeep(array){
 
 
 function objectMerge(object, ...sources){
-
+    for(let source of sources){
+        for(let prop in source){
+            if(Array.isArray(object[prop])){
+                for(let i =0;i<object.length;i++){
+                    
+                }
+            }
+        }
+    }
+    return object;
 
 }
-
-function collectionSortedBy(){
-
+var object = {
+    'a': [{ 'b': 2 }, { 'd': 4 }]
+};
+   
+var other = {
+'a': [{ 'c': 3 }, { 'e': 5 }]
+};
+   
+// console.log(objectMerge(object,other))
+function collectionSortBy(collection,iteratee=identity){
+    
+    iteratee= Array.isArray(iteratee)?iteratee: [iteratee];
+    let out =[];
+    collection = Array.isArray(collection)?collection:Object.values(collection);
+    out.push(collection[0]);
+    for(let i=1;i<collection.length;i++){
+        let j =0;
+        let sth=true;
+        while(iteratee[0](collection[i])>iteratee[0](out[j])){
+            if(j<out.length-1) j++;
+            else {
+                out.push(collection[i]);
+                sth=false;
+                break;
+            }
+        }
+       
+        
+        if(sth){
+            out.splice(j,0,collection[i]);
+        }
+        sth =true;
+    }
+    
+    return out;
 }
+var users = [
+    { 'user': 'fred',   'age': 42 },
+    { 'user': 'barney', 'age': 57 },
+    { 'user': 'fred',   'age': 40 },
+    { 'user': 'barney', 'age': 50 }
+];
+console.log(collectionSortBy(users, [function(o) { return o.user; }]))
+// console.log(collectionSortBy(users, [function(o) { return o.user; },function(o) { return o.age; }]))
 
 function after(n,func){
-    
     return ()=>{
         n-=1;
         if (n<0){
@@ -831,7 +926,17 @@ function collectionReduce(collection,iteratee=identity,accumulator){
         }
         return accumulator ;
     }else{
-        
+        if(accumulator!==undefined) {
+            for(let k in collection){
+                accumulator = iteratee(accumulator,collection[k],k);
+            }
+        }else{
+            accumulator ={};
+            for(let k in collection){
+                accumulator = iteratee(accumulator,collection[k],k);
+            }
+        }
+        return accumulator;
     }
 }
 // console.log(collectionReduce(['a','b'],(sum,n)=>sum+n))
@@ -840,3 +945,5 @@ function collectionReduce(collection,iteratee=identity,accumulator){
 //       (result[value] || (result[value] = [])).push(key);
 //       return result;
 //     }, {}));
+
+// console.log(collectionReduce({a:1,b:2}))
