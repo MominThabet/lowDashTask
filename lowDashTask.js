@@ -863,43 +863,63 @@ function objectMerge(object, ...sources){
 // };
    
 // console.log(objectMerge(object,other))
-function collectionSortBy(collection,iteratee=identity){
-    iteratee= Array.isArray(iteratee)?iteratee: [iteratee];
+
+const customSort = function(key){
+    return (a,b)=> (a[key]>b[key])? 1 :((a[key])<b[key])?-1:0;
+}
+//    out.splice(j,0,collection[i]);
+
+function collectionSortBy(collection,iteratee=[identity]){
     let out =[];
     collection = Array.isArray(collection)?collection:Object.values(collection);
     out.push(collection[0]);
+    let repeated =[];
     for(let i=1;i<collection.length;i++){
-        let j =0;
-        let sth=true;
-        while(iteratee[0](collection[i])>iteratee[0](out[j])){
-            if(j<out.length-1) j++;
-            else {
+        for(let j=0 ; j<out.length;j++){
+            if(iteratee[0](collection[i])<iteratee[0](out[j])) { 
+                out.splice(j,0,collection[i]);
+                break;
+            }else if(iteratee[0](collection[i])==iteratee[0](out[j])){
+                if(!repeated.includes(out[j])){
+                    repeated.push(out[j])
+                }
+                if(!repeated.includes(collection[i]))
+                    repeated.push(collection[i]);
+            }if(j==out.length-1) {
                 out.push(collection[i]);
-                sth=false;
                 break;
             }
-        } 
-        if(sth){
-            out.splice(j,0,collection[i]);
         }
-        sth =true;
-    }   
+    }
+    if(iteratee.length==1){
+        return out;
+    }else
+    {let reduced =Array.from(new Set(repeated.map(x=>iteratee[0](x))))
+    for(let r of reduced){
+        let f = out.findIndex((x)=>iteratee[0](x)==(r));
+        let l = arrayFindLastIndex(out,(x)=>iteratee[0](x)==(r));
+        let temp = collectionSortBy(out.slice(f,l+1),iteratee.slice(1));
+        out.splice(f,temp.length,...temp);
+    }}
+
+
     return out;
 }
-
+// console.log(collectionSortBy([5,6,7,1,14,2,99]))
 function sortbyV2(collection,iteratee=identity) {
     let out =[];
 
 }
 var users = [
-    { 'user': 'fred',   'age': 42 },
-    { 'user': 'barney', 'age': 57 },
-    { 'user': 'fred',   'age': 40 },
-    { 'user': 'barney', 'age': 50 }
+    { 'user': 'fred',   'age': 39 ,n:1},
+    { 'user': 'barney', 'age': 60 ,n:3},
+    { 'user': 'barney', 'age': 60 ,n:2},
+    { 'user': 'fred',   'age': 25 ,n:1},
+    { 'user': 'barney', 'age': 50 ,n:1}
 ];
 // console.log(collectionSortBy(users, [function(o) { return o.user; }]))
-// console.log(collectionSortBy(users, [function(o) { return o.user; },function(o) { return o.age; }]))
-
+console.log(collectionSortBy(users, [function(o) { return o.user; },function(o) { return o.age; },o=> o.n]))
+console.log()
 function after(n,func){
     return ()=>{
         n-=1;
