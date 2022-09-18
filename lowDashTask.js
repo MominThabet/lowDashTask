@@ -1,57 +1,57 @@
 Array.prototype.indexOf=function(x){
-    for(let i =0;i<this.length;i++){
-        if(this[i]==x) return i;
+    for (let indx = 0 ; indx < this.length ; indx++){
+        if ( this[indx] == x) {
+            return i ;
+        };
     }
     return undefined;
 }
-Array.prototype.push=function(x){
+
+
+Array.prototype.push = function(x){
     this[this.length] = x;
     return this;
 }
-Array.prototype.slice = function(s=0,e=this.length){
-    let out=[];
-    for(let i = s;i<e&&i<this.length;i++){
-        out.push(this[i]);
+
+
+Array.prototype.slice = function( startIndex =0, endIndex =this.length){
+    let output = [] ;
+    for(let indx = startIndex ; indx < endIndex && indx <this.length ; indx++){
+        output.push(this[indx]);
     }
-    return out;
+    return output;
 }
 
-// Array.prototype.splice = function(index,n=1){
-//     let out=[];
-//     for(let i =0;i<this.length;i++){
-//         if(i==index){
-//             out.push(this[i]);       
-//         }
-//         out.push(this[i]);
-//     }
-//     return this;
-// }
 
 function arrayPull(array ,...values){
-    for(let x of values){
-        while(collectionIncludes(array,x)){
-            array.splice(array.indexOf(x),1);
+    for(let element of values){
+        while(collectionIncludes(array,element)){
+            array.splice(array.indexOf(element),1);
         }
     }
     return array;
 }
+
+
 // var array = ['a', 'b', 'c', 'a', 'b', 'c'];
 // //console.log(arrayPull(array,'a','c'))
 // //console.log(array)
+
+
 function arrayChunk(array,size=1){
-    let arr=[];
-    for(let i =0;i<array.length;){
+    let output=[];
+    for(let index = 0; index <array.length;){
         let temp =[];
-        for(let j =0;j<size;j++,i++){
-            temp.push(array[i]);
-            if(i==array.length-1){
-                arr.push(temp);
-                return arr;
+        for(let j = 0 ; j < size ; j++, index++){
+            temp.push(array[index]);
+            if(index==array.length-1){
+                output.push(temp);
+                return output;
             }
         }
-        arr.push(temp);
+        output.push(temp);
     }
-    return arr;
+    return output;
 }
 
 // //console.log(arrayChunk(['a', 'b', 'c', 'd']))
@@ -920,7 +920,7 @@ const customSort = function(key){
 
 function collectionSortBy(collection,iteratee=[identity]){
     let out =[];
-    collection = Array.isArray(collection)?collection:Object.values(collection);
+    collection = Array.isArray(collection) ? collection : Object.values(collection);
     out.push(collection[0]);
     let repeated =[];
     for(let i=1;i<collection.length;i++){
@@ -930,6 +930,7 @@ function collectionSortBy(collection,iteratee=[identity]){
                 break;
             }else if(iteratee[0](collection[i])==iteratee[0](out[j])){
                 if(!repeated.includes(out[j])){
+                   
                     repeated.push(out[j])
                 }
                 if(!repeated.includes(collection[i]))
@@ -940,16 +941,18 @@ function collectionSortBy(collection,iteratee=[identity]){
             }
         }
     }
-    if(iteratee.length==1){
+    if(iteratee.length == 1) {
         return out;
-    }else
-    {let reduced =Array.from(new Set(repeated.map(x=>iteratee[0](x))))
-    for(let r of reduced){
-        let f = out.findIndex((x)=>iteratee[0](x)==(r));
-        let l = arrayFindLastIndex(out,(x)=>iteratee[0](x)==(r));
-        let temp = collectionSortBy(out.slice(f,l+1),iteratee.slice(1));
-        out.splice(f,temp.length,...temp);
-    }}
+
+    } else {
+        let reduced =Array.from(new Set(repeated.map(x=>iteratee[0](x))))
+        for(let r of reduced){
+            let f = out.findIndex((x)=>iteratee[0](x)==(r));
+            let l = arrayFindLastIndex(out,(x)=>iteratee[0](x)==(r));
+            let temp = collectionSortBy(out.slice(f,l+1),iteratee.slice(1));
+            out.splice(f,temp.length,...temp);
+        }   
+    }
 
 
     return out;
@@ -1020,8 +1023,8 @@ function unary(func){
 function collectionReduce(collection,iteratee=identity,accumulator){
     if(Array.isArray(collection)){
         if(accumulator!==undefined) {
-            for(let e of collection){
-                accumulator = iteratee(accumulator,e)
+            for(let element of collection){
+                accumulator = iteratee(accumulator,element)
             }
         }else{
             accumulator=collection[0];
