@@ -699,9 +699,15 @@ function objectSet(object,path,value){
 // console.log(object.x);
 
 function collectionInvokeMap(collection,path,...args){
-    
-
+    let out =[];
+    path = typeof path === "function"?path :collection[path];
+    for(let prop in collection){
+        out.push(path.call(collection[prop],args[0]));
+    }
+    return out;
 }
+// console.log(collectionInvokeMap([[4, 1, 7], [3, 2, 1]], 'filter',(x)=>x%2==0));
+// console.log(collectionInvokeMap([123,456],String.prototype.split,''))
 function collectionOrderBy(){
 
 }
@@ -770,10 +776,30 @@ function objectUpdate(object,path,updater){
 // console.log(object.x)
 
 
-function objectTransform(){
+function objectTransform(object,iteratee=identity,accumulator){
 
+    if(Array.isArray(object)){
+        accumulator = typeof accumulator ==='undefined'? []:accumulator ;
+        for(let e of object)
+            if(iteratee(accumulator,e) ===false){
+                return accumulator
+            };
+
+    }else{
+    for(let prop in object){
+        accumulator = typeof accumulator ==='undefined'? {}:accumulator ;
+        if(iteratee(accumulator,object[prop],prop)===false) return accumulator;
+    }}
+    return accumulator;
 }
+// console.log(objectTransform({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
+//       (result[value] || (result[value] = [])).push(key);
+//     }))
 
+// console.log(objectTransform([2, 3, 4], function(result, n) {
+//     result.push(n *= n);
+//     return n % 2 == 0;
+//   },[]));
 function arrayFromPairs(pairs){
     let out={};
     for(let pair of pairs){
@@ -956,11 +982,10 @@ function collectionReduce(collection,iteratee=identity,accumulator){
 }
 // console.log(collectionReduce(['a','b'],(sum,n)=>sum+n))
 
-// console.log(collectionReduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, key,value) {
+// console.log(collectionReduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value,key) {
 //       (result[value] || (result[value] = [])).push(key);
 //       return result;
 //     }, {}));
 
-console.log(collectionReduce({a:1,b:2}))
 
 
