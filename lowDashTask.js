@@ -708,9 +708,58 @@ function collectionInvokeMap(collection,path,...args){
 }
 // console.log(collectionInvokeMap([[4, 1, 7], [3, 2, 1]], 'filter',(x)=>x%2==0));
 // console.log(collectionInvokeMap([123,456],String.prototype.split,''))
-function collectionOrderBy(){
-
+function collectionOrderBy(collection,iteratee=[identity],order){
+    let out =[];
+    // order[0]=order[0]?order[0]:'as';
+    console.log(order)
+    collection = Array.isArray(collection)?collection:Object.values(collection);
+    out.push(collection[0]);
+    let repeated =[];
+    for(let i=1;i<collection.length;i++){
+        for(let j=0 ; j<out.length;j++){
+            if(iteratee[0](collection[i])<iteratee[0](out[j])) { 
+                out.splice(j,0,collection[i]);
+                break;
+            }else if(iteratee[0](collection[i])==iteratee[0](out[j])){
+                if(!repeated.includes(out[j])){
+                    repeated.push(out[j])
+                }
+                if(!repeated.includes(collection[i]))
+                    repeated.push(collection[i]);
+            }if(j==out.length-1) {
+                out.push(collection[i]);
+                break;
+            }
+        }
+    }
+    if(order[0]==='desc'){
+        out.reverse();
+    }
+    if(iteratee.length==1){
+        return out;
+    }else{
+    let reduced =Array.from(new Set(repeated.map(x=>iteratee[0](x))))
+    for(let r of reduced){
+        let f = out.findIndex((x)=>iteratee[0](x)==(r));
+        let l = arrayFindLastIndex(out,(x)=>iteratee[0](x)==(r));
+        let temp = collectionSortBy(out.slice(f,l+1),iteratee.slice(1),order.slice(1));
+        out.splice(f,temp.length,...temp);
+    }}
+    
+    return out;
 }
+
+var users = [
+    { 'user': 'fred',   'age': 39 ,n:1},
+    { 'user': 'barney', 'age': 60 ,n:3},
+    { 'user': 'barney', 'age': 60 ,n:21},
+    { 'user': 'fred',   'age': 25 ,n:4},
+    { 'user': 'barney', 'age': 50 ,n:5}
+];
+// console.log(collectionOrderBy(users, [function(o) { return o.n; }],['desc']))
+console.log(collectionOrderBy(users, [function(o) { return o.user; },function(o) { return o.age; },o=> o.n] ,['desc','desc','desc']))
+
+
 function collectionPartition(collection,predicate=identity){
     predicate = predicateType(predicate);
     let out =[[],[]];
@@ -906,20 +955,16 @@ function collectionSortBy(collection,iteratee=[identity]){
     return out;
 }
 // console.log(collectionSortBy([5,6,7,1,14,2,99]))
-function sortbyV2(collection,iteratee=identity) {
-    let out =[];
 
-}
-var users = [
-    { 'user': 'fred',   'age': 39 ,n:1},
-    { 'user': 'barney', 'age': 60 ,n:3},
-    { 'user': 'barney', 'age': 60 ,n:2},
-    { 'user': 'fred',   'age': 25 ,n:1},
-    { 'user': 'barney', 'age': 50 ,n:1}
-];
+// var users = [
+//     { 'user': 'fred',   'age': 39 ,n:1},
+//     { 'user': 'barney', 'age': 60 ,n:3},
+//     { 'user': 'barney', 'age': 60 ,n:2},
+//     { 'user': 'fred',   'age': 25 ,n:1},
+//     { 'user': 'barney', 'age': 50 ,n:1}
+// ];
 // console.log(collectionSortBy(users, [function(o) { return o.user; }]))
-console.log(collectionSortBy(users, [function(o) { return o.user; },function(o) { return o.age; },o=> o.n]))
-console.log()
+// console.log(collectionSortBy(users, [function(o) { return o.user; },function(o) { return o.age; },o=> o.n]))
 function after(n,func){
     return ()=>{
         n-=1;
