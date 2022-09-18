@@ -800,26 +800,41 @@ function arrayFlattenDeep(array){
 // //console.log(arrayFlattenDeep([1, [2, [3, [4]],5,[6],[[7]]]]))
 
 
-function objectMerge(object, ...sources){
-    for(let source of sources){
-        for(let prop in source){
-            if(Array.isArray(object[prop])){
-                for(let i =0;i<object.length;i++){
-                    
+function baseMerger(object,source){
+    for(let prop in source){
+        if(!prop in object){
+            object[prop] =source[prop];
+        }else{
+            if(Array.isArray(object[prop]) && Array.isArray(source[prop])){
+                for(let i=0;i<source[prop].length;i++){
+                    if(typeof object[prop][i] =='object' && typeof source[prop][i] =='object'){
+                        baseMerger(object[prop][i],source[prop][i])
+                    }else{
+                        object[prop][i]=source[prop][i];
+                    }
                 }
+            }else if (typeof object[prop] =='object' && typeof source[prop] =='object'){
+                baseMerger(object[prop],source[prop]);
+            }else{
+                object[prop]=source[prop];
             }
         }
     }
-    return object;
-
 }
-var object = {
-    'a': [{ 'b': 2 }, { 'd': 4 }]
-};
+
+function objectMerge(object, ...sources){
+    for(let source of sources){
+        baseMerger(object,source);
+    }
+    return object;
+}
+// var object = {
+//     'a': [{ 'b': 2 }, { 'd': 4 }]
+// };
    
-var other = {
-'a': [{ 'c': 3 }, { 'e': 5 }]
-};
+// var other = {
+// 'a': [{ 'b': 3 }, { 'e': 5 }]
+// };
    
 // console.log(objectMerge(object,other))
 function collectionSortBy(collection,iteratee=identity){
@@ -930,9 +945,10 @@ function collectionReduce(collection,iteratee=identity,accumulator){
                 accumulator = iteratee(accumulator,collection[k],k);
             }
         }else{
-            accumulator ={};
-            for(let k in collection){
-                accumulator = iteratee(accumulator,collection[k],k);
+            accumulator =Object.values(collection)[0];
+            let keys = Object.keys(collection)
+            for(let i =1;i<keys.length;i++){
+                accumulator = iteratee(accumulator,collection[keys[i]],keys[i]);
             }
         }
         return accumulator;
@@ -940,9 +956,11 @@ function collectionReduce(collection,iteratee=identity,accumulator){
 }
 // console.log(collectionReduce(['a','b'],(sum,n)=>sum+n))
 
-// console.log(collectionReduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
+// console.log(collectionReduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, key,value) {
 //       (result[value] || (result[value] = [])).push(key);
 //       return result;
 //     }, {}));
 
-// console.log(collectionReduce({a:1,b:2}))
+console.log(collectionReduce({a:1,b:2}))
+
+
