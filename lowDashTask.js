@@ -763,32 +763,30 @@ function objectAssignIn(object,...sources){
 
 // //console.log(objectAssignIn({ 'a': 0 }, new Foo, new Bar));
 
-
 function objectSet(object,path,value){
     path = (typeof path ==='string')? collectionFilter(path.split(/[.\[\]]/),(x)=>x!=''):path;
-    let len =path.length-1;
-    let obj =object; 
-    for(var i =0;i<len;i++){
+    let len = path.length - 1;
+    let obj = object; 
+    for(var i =0 ; i < len ; i++){
         if((/\d/.test(path[i+1]))){
-            obj[path[i]]= obj[path[i]] ||[];
-        }else{
-        
-            obj[path[i]]= obj[path[i]] ||{};
+            obj [ path[i] ] = (Array.isArray(obj[ path[i] ]) && obj[ path[i]]) || [];
+        }else{        
+            obj [ path[i] ] = (typeof obj[path[i]] ==='object' && obj[ path[i]] )|| {};
         } 
-        obj =obj[path[i]];
+        obj = obj[ path[i] ];
     }
-    obj[path[i]]=value;
+    obj[ path[i] ] = value;
     return object;
 }
 
 
-var object = { 'a': [{ 'b': { 'c': 3 } }] };
+var object = { 'a': [{ 'b':  3  }] };
  
-// console.log(objectSet(object, 'a[0].b.c', 4));
-// console.log(object.a);
-// // // // => 4
+console.log(objectSet(object, 'a[0].b.c', 4));
+console.log(object.a[0]);
+// // // => 4
  
-// objectSet(object, ['x', '0', 'y', 'z'], 5);
+// objectSet(object, ['x', '4', 'y', 'z'], 5);
 // console.log(object.x);
 
 
@@ -860,7 +858,7 @@ var users = [
 // console.log(collectionOrderBy(users, [function(o) { return o.n; }],['desc']))
 
 
-console.log(collectionOrderBy(users, [function(o) { return o.user; },function(o) { return o.age; },o=> o.n] ,['desc','desc','asec']))
+// console.log(collectionOrderBy(users, [function(o) { return o.user; },function(o) { return o.age; },o=> o.n] ,['desc','desc','asec']))
 
 
 function collectionPartition(collection,predicate=identity){
@@ -1046,40 +1044,36 @@ const customSort = function(key){
 function collectionSortBy(collection,iteratee=[identity]){
     let out =[];
     collection = Array.isArray(collection) ? collection : Object.values(collection);
-    out.push(collection[0]);
-    let repeated =[];
-    for(let i=1;i<collection.length;i++){
-        for(let j=0 ; j<out.length;j++){
-            if(iteratee[0](collection[i])<iteratee[0](out[j])) { 
-                out.splice(j,0,collection[i]);
+    out.push( collection[0] );
+    let repeated = [ ];
+    for(let i = 1 ; i < collection.length ; i++){
+        for(let j = 0 ; j < out.length ; j++){
+            if ( iteratee[0] (collection[i]) < iteratee[0](out[j]) ) { 
+                out.splice( j , 0 , collection[i] );
                 break;
-            }else if(iteratee[0](collection[i])==iteratee[0](out[j])){
-                if(!repeated.includes(out[j])){
-                   
-                    repeated.push(out[j])
+            }else if ( iteratee[0] ( collection[i] ) == iteratee[0](out[j]) ){
+                if( !repeated.includes(out[j]) ){
+                    repeated.push(out[j]);
                 }
-                if(!repeated.includes(collection[i]))
-                    repeated.push(collection[i]);
-            }if(j==out.length-1) {
-                out.push(collection[i]);
+                if( ! repeated.includes(collection[i] ))
+                    repeated.push( collection[i] );
+            }if( j == out.length-1 ) {
+                out.push( collection[i] );
                 break;
             }
         }
     }
-    if(iteratee.length == 1) {
+    if( iteratee.length == 1) {
         return out;
-
     } else {
-        let reduced =Array.from(new Set(repeated.map(x=>iteratee[0](x))))
-        for(let r of reduced){
-            let f = out.findIndex((x)=>iteratee[0](x)==(r));
-            let l = arrayFindLastIndex(out,(x)=>iteratee[0](x)==(r));
-            let temp = collectionSortBy(out.slice(f,l+1),iteratee.slice(1));
-            out.splice(f,temp.length,...temp);
+        let reduced = Array.from( new Set( repeated.map( x=> iteratee[0](x) )))
+        for( let r of reduced ){
+            let firstIndex = out.findIndex((x)=>iteratee[0](x)==(r));
+            let lastIndex = arrayFindLastIndex(out,(x)=>iteratee[0](x)==(r));
+            let temp = collectionSortBy(out.slice( firstIndex ,lastIndex + 1),iteratee.slice(1));
+            out.splice(firstIndex ,temp.length,...temp);.0
         }   
     }
-
-
     return out;
 }
 
